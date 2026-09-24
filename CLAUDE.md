@@ -87,7 +87,8 @@ Cada regla (positivos/negativos), anonimizador, combinación de puntajes (incl. 
 - [x] Paso 9: `.github/workflows/ci.yml` (ubuntu, SDK de global.json, build Release `-warnaserror`, tests, artefacto .trx) + badge en README
 - [x] Paso 10a: `scripts/CargarDemo.cs` (18 mensajes, ~6 semanas, pipeline real, `--reiniciar` solo LocalDB); BD reseteada y cargada. Prompt con definiciones de cada tipo de estafa
 - [x] Paso 10b: README final (problema/solución, stack, Mermaid arquitectura + secuencia, ejecución, ejemplos reales, decisiones, pruebas, limitaciones, próximos pasos, autor)
-- [ ] Paso 10c (Bladimir): capturas en `docs/capturas/` (descomentar bloques `CAPTURA` del README) y URL de LinkedIn (`TODO` en sección Autor). Luego cerrar #10
+- [x] Paso 10c: 4 capturas en `docs/capturas/` integradas al README; autor Bladimir Lopez, LinkedIn linkedin.com/in/bladimirlopez. Proyecto completo (pasos 1–10)
+- Pendientes opcionales: tipo `any` de enums en Schemas de Swagger (falta `type: string`), circuit breaker, frontend React, despliegue
 
 ## Comandos útiles
 - Ejecutar API: `dotnet run --project src/NoCaigo.Api` (Swagger en http://localhost:5224/swagger)

@@ -430,7 +430,7 @@ NoCaigo/
 
 **Bladimir Lopez**, ingeniero en informática.
 
-- LinkedIn: [linkedin.com/in/TU-USUARIO](https://www.linkedin.com/in/TU-USUARIO) <!-- TODO: reemplazar por tu URL de LinkedIn -->
+- LinkedIn: [linkedin.com/in/bladimirlopez](https://www.linkedin.com/in/bladimirlopez)
 - GitHub: [@lopezgalarce1997-debug](https://github.com/lopezgalarce1997-debug)
 
 ---
