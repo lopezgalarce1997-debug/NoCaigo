@@ -73,6 +73,7 @@ Cada regla (positivos/negativos), anonimizador, combinación de puntajes (incl. 
 ## Estado
 - [x] Preparación: entorno (.NET 10, LocalDB, gh) y git local
 - [x] Repo público: https://github.com/lopezgalarce1997-debug/NoCaigo (cuenta `gh`: lopezgalarce1997-debug)
+- [x] Tablero Kanban: https://github.com/users/lopezgalarce1997-debug/projects/1 — un issue por paso (#1–#10). Los commits de cada paso cierran su issue con `Closes #N`
 - [x] Paso 1: solución `NoCaigo.slnx` con 5 proyectos (`src/`, `tests/`) y referencias
 - [x] Paso 2: entidades, enums, DbContext, migración `Inicial` y semilla (aplicada en LocalDB)
 - [x] Paso 3: `IAnonimizador` + `Anonimizador` (GeneratedRegex) con pruebas
