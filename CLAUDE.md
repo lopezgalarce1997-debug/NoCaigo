@@ -1,0 +1,74 @@
+﻿# NoCaigo – Detector de estafas con IA
+
+## Objetivo
+API REST de portafolio (autor: Bladimir). Una persona pega un mensaje sospechoso (SMS, WhatsApp o correo) y recibe:
+veredicto (`Seguro` / `Sospechoso` / `Estafa`), nivel de riesgo 0–100, tipo de estafa y señales explicadas en lenguaje simple.
+Los análisis se guardan y hay estadísticas (por tipo de estafa y tendencia semanal).
+
+Demuestra: ASP.NET Core Web API, SQL Server + EF Core, xUnit + Moq, GitHub Actions e integración de IA.
+
+## Forma de trabajo (obligatorio)
+- Etapas pequeñas. **Detenerse al final de cada paso** para que Bladimir revise, pruebe y confirme.
+- Explicar brevemente cada decisión de diseño importante; debe poder defender cada línea en una entrevista.
+- Nunca generar todo el proyecto de una vez.
+- Si hay varias alternativas razonables, presentarlas y dejarlo elegir.
+- Código, nombres y comentarios en español cuando sea natural, con convenciones C# (PascalCase, etc.).
+- Commits pequeños y descriptivos al final de cada paso.
+
+## Stack
+- ASP.NET Core Web API sobre .NET 10 (LTS), fijado con `global.json`
+- SQL Server LocalDB (`(localdb)\MSSQLLocalDB`) + EF Core con migraciones
+- xUnit + Moq, Swagger/OpenAPI
+- IA detrás de interfaz, proveedor por configuración: Ollama (local) y Gemini o Groq (capa gratuita)
+- GitHub (repo público `NoCaigo`), GitHub Projects (Kanban), GitHub Actions (`.github/workflows/ci.yml`)
+
+## Arquitectura (Clean Architecture)
+- **NoCaigo.Domain**: entidades, enums, reglas de negocio puras. Sin dependencias.
+- **NoCaigo.Application**: casos de uso, DTOs, interfaces (`IServicioIA`, `IRepositorioAnalisis`, `IReglaDeteccion`, `IAnonimizador`), combinación de puntajes.
+- **NoCaigo.Infrastructure**: EF Core, DbContext, repositorios, clientes de IA.
+- **NoCaigo.Api**: controladores, DI, Swagger, manejo global de errores.
+- **NoCaigo.Tests**: pruebas xUnit.
+
+## Análisis híbrido
+1. **Anonimizador**: reemplaza teléfonos, RUT, correos y tarjetas por `[TELEFONO]`, `[RUT]`, `[CORREO]`, `[TARJETA]` antes de guardar o enviar a la IA.
+2. **Reglas (Strategy)**: cada regla implementa `IReglaDeteccion` → activada, puntos de riesgo, descripción. Iniciales: links acortados, dominios que imitan bancos/empresas chilenas, urgencia, pedido de claves/códigos/coordenadas/tarjeta, pedido de pago/transferencia, premios inesperados.
+3. **IA**: recibe texto anonimizado, responde solo JSON fijo (tipo, riesgo, veredicto, señales, explicación). Parseo seguro.
+4. **Combinación**: reglas + IA. Si la IA falla (error/timeout/cuota), se responde solo con reglas y se indica (`UsoIA = false`).
+
+## Modelo de datos
+- **Analisis**: Id, TextoAnonimizado, Canal (enum), NivelRiesgo, Veredicto (enum), TipoEstafaId, Explicacion, UsoIA, FechaCreacion
+- **TipoEstafa** (semilla): Falso banco, Paquete retenido, Falso familiar, Premio falso, Falsa oferta de trabajo, Inversión falsa, Otro, Ninguno
+- **Senal**: Id, AnalisisId, Descripcion, Origen (Regla / IA)
+
+## Endpoints
+- `POST /api/analisis`
+- `GET /api/analisis/{id}`
+- `GET /api/analisis?tipo=&canal=&desde=&hasta=&pagina=`
+- `GET /api/estadisticas/por-tipo`
+- `GET /api/estadisticas/tendencia`
+
+## Seguridad
+- Claves nunca en el repo: User Secrets (local), variables de entorno (servidor), GitHub Secrets (CI).
+- `appsettings.json` solo con configuración de IA sin secretos.
+- Validación de entrada: texto obligatorio, largo máximo.
+
+## Pruebas
+Cada regla (positivos/negativos), anonimizador, combinación de puntajes (incl. falla de IA con Moq), parseo JSON de IA (incl. mal formado).
+
+## Plan
+**Sprint 1**
+1. Solución + 5 proyectos con referencias
+2. Entidades, enums, DbContext, migración inicial y semilla
+3. Anonimizador + pruebas
+4. Reglas de detección + pruebas
+5. Caso de uso solo con reglas + endpoints en Swagger
+
+**Sprint 2**
+6. `IServicioIA`: Ollama, luego Gemini o Groq, por configuración
+7. Combinación de puntajes y fallas de IA + pruebas
+8. Endpoints de estadísticas
+9. GitHub Actions CI + badge en README
+10. README (descripción, capturas, ejecución, decisiones, aviso de que el resultado es orientativo)
+
+## Estado
+- [ ] Preparación: entorno, git, repo GitHub
