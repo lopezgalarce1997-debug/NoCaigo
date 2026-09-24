@@ -6,7 +6,7 @@ using NoCaigo.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // Cada capa registra sus propios servicios; Program.cs solo las compone.
-builder.Services.AgregarAplicacion();
+builder.Services.AgregarAplicacion(builder.Configuration);
 builder.Services.AgregarInfraestructura(builder.Configuration);
 
 // Enums como texto en el JSON ("Estafa" en vez de 3): más legible para quien consume la API.
