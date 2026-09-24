@@ -12,6 +12,23 @@ namespace NoCaigo.Infrastructure.IA;
 /// </summary>
 internal static class PromptAnalisis
 {
+    // Una definición breve por tipo: sin ella, los modelos pequeños eligen casi al azar
+    // (llama3.2:3b clasificaba inversiones, cobros de courier y ataques como "Falsa oferta de trabajo").
+    private static readonly Dictionary<int, string> DefinicionesTipo = new()
+    {
+        [TipoEstafa.FalsoBanco] = "se hace pasar por un banco o tarjeta: cuenta bloqueada, cargo no reconocido, pide claves o coordenadas",
+        [TipoEstafa.PaqueteRetenido] = "envío, courier, aduana o paquete retenido que requiere pagar o actualizar datos",
+        [TipoEstafa.FalsoFamiliar] = "dice ser un familiar o conocido (número nuevo, accidente, emergencia) y pide dinero",
+        [TipoEstafa.PremioFalso] = "premio, sorteo, regalo o beneficio que la persona no esperaba",
+        [TipoEstafa.FalsaOfertaTrabajo] = "empleo fácil o desde casa con ganancias altas, a veces cobrando una inscripción",
+        [TipoEstafa.InversionFalsa] = "inversión, criptomonedas o rentabilidad garantizada",
+        [TipoEstafa.Otro] = "estafa que no calza con los anteriores (por ejemplo, suplantar al SII u otro organismo o empresa)",
+        [TipoEstafa.Ninguno] = "mensaje legítimo, sin intención de estafa",
+    };
+
+    private static string ListaTipos => string.Join("\n", TipoEstafa.Catalogo.Select(t =>
+        $"  - \"{t.Nombre}\": {DefinicionesTipo.GetValueOrDefault(t.Id, "sin descripción")}"));
+
     public static readonly string Sistema = $$"""
         Eres un analista experto en estafas por SMS, WhatsApp y correo en Chile.
 
@@ -24,7 +41,8 @@ internal static class PromptAnalisis
         {"tipoEstafa": "", "nivelRiesgo": 0, "veredicto": "", "senales": [""], "explicacion": ""}
 
         Reglas:
-        - tipoEstafa: exactamente uno de: {{string.Join(", ", TipoEstafa.Catalogo.Select(t => $"\"{t.Nombre}\""))}}.
+        - tipoEstafa: exactamente uno de estos nombres, según su definición:
+        {{ListaTipos}}
         - nivelRiesgo: entero de 0 a 100.
         - veredicto: "Seguro" (0 a {{ClasificadorRiesgo.UmbralSospechoso - 1}}), "Sospechoso" ({{ClasificadorRiesgo.UmbralSospechoso}} a {{ClasificadorRiesgo.UmbralEstafa - 1}}) o "Estafa" ({{ClasificadorRiesgo.UmbralEstafa}} a 100), coherente con nivelRiesgo.
         - senales: SOLO indicios de riesgo concretos del mensaje, máximo 5 frases cortas en español simple.
