@@ -77,8 +77,11 @@ Cada regla (positivos/negativos), anonimizador, combinación de puntajes (incl. 
 - [x] Paso 2: entidades, enums, DbContext, migración `Inicial` y semilla (aplicada en LocalDB)
 - [x] Paso 3: `IAnonimizador` + `Anonimizador` (GeneratedRegex) con pruebas
 - [x] Paso 4: 6 reglas `IReglaDeteccion` (Strategy + base Template Method `ReglaPorPalabrasClave`) con pruebas
+- [x] Paso 5: `ServicioAnalisis` (solo reglas), `RepositorioAnalisis`, `AnalisisController`, Swagger UI, manejo global de errores
 
 ## Comandos útiles
+- Ejecutar API: `dotnet run --project src/NoCaigo.Api` (Swagger en http://localhost:5224/swagger)
+- Pruebas: `dotnet test`
 - Migración nueva: `dotnet ef migrations add <Nombre> -p src/NoCaigo.Infrastructure -s src/NoCaigo.Api -o Persistencia/Migraciones`
 - Aplicar: `dotnet ef database update -p src/NoCaigo.Infrastructure -s src/NoCaigo.Api`
 - `dotnet-ef` es herramienta local (`dotnet-tools.json`): `dotnet tool restore`

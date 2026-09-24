@@ -24,7 +24,11 @@ public class AnalisisConfiguracion : IEntityTypeConfiguration<Analisis>
         builder.Property(a => a.Canal).HasConversion<string>().HasMaxLength(20);
         builder.Property(a => a.Veredicto).HasConversion<string>().HasMaxLength(20);
 
-        builder.Property(a => a.FechaCreacion).HasColumnType("datetime2");
+        // datetime2 no guarda la zona horaria: al leer, EF devuelve DateTimeKind.Unspecified
+        // y el JSON sale sin la "Z". Como siempre se guarda en UTC, se marca como UTC al leer.
+        builder.Property(a => a.FechaCreacion)
+            .HasColumnType("datetime2")
+            .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 
         builder.HasOne(a => a.TipoEstafa)
             .WithMany()

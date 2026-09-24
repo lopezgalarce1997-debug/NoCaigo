@@ -1,4 +1,43 @@
-﻿@NoCaigo.Api_HostAddress = http://localhost:5224
+@NoCaigo.Api_HostAddress = http://localhost:5224
 
-# Las peticiones de ejemplo se agregan en el paso 5 (endpoints de análisis).
+### Mensaje claramente fraudulento (falso banco)
+POST {{NoCaigo.Api_HostAddress}}/api/analisis
+Content-Type: application/json
 
+{
+  "texto": "BancoEstado: tu cuenta fue bloqueada. Ingresa HOY a https://bancoestado-seguro.com y valida tu clave. Dudas al +56 9 1234 5678",
+  "canal": "Sms"
+}
+
+### Paquete retenido con link acortado
+POST {{NoCaigo.Api_HostAddress}}/api/analisis
+Content-Type: application/json
+
+{
+  "texto": "Correos de Chile: tu paquete está retenido. Paga $1.990 de aduana en bit.ly/3xYz12 antes de 24 horas.",
+  "canal": "WhatsApp"
+}
+
+### Mensaje normal
+POST {{NoCaigo.Api_HostAddress}}/api/analisis
+Content-Type: application/json
+
+{
+  "texto": "Hola, ¿nos juntamos el sábado a almorzar?",
+  "canal": "WhatsApp"
+}
+
+### Texto vacío (debe responder 400)
+POST {{NoCaigo.Api_HostAddress}}/api/analisis
+Content-Type: application/json
+
+{
+  "texto": "",
+  "canal": "Sms"
+}
+
+### Detalle
+GET {{NoCaigo.Api_HostAddress}}/api/analisis/1
+
+### Listado filtrado por tipo (1 = Falso banco) y canal
+GET {{NoCaigo.Api_HostAddress}}/api/analisis?tipo=1&canal=Sms&pagina=1

@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NoCaigo.Application.Interfaces;
 using NoCaigo.Infrastructure.Persistencia;
+using NoCaigo.Infrastructure.Persistencia.Repositorios;
 
 namespace NoCaigo.Infrastructure;
 
@@ -18,6 +20,7 @@ public static class DependencyInjection
             ?? throw new InvalidOperationException("Falta la cadena de conexión 'NoCaigo'.");
 
         services.AddDbContext<NoCaigoDbContext>(opciones => opciones.UseSqlServer(cadenaConexion));
+        services.AddScoped<IRepositorioAnalisis, RepositorioAnalisis>();
 
         return services;
     }
