@@ -7,6 +7,7 @@
     <!-- Los comentarios /// de los controladores aparecen en Swagger. 1591 = aviso por miembros sin comentario. -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
+    <UserSecretsId>7521f2f3-fd8f-4c74-b0d9-a1a9bf7b0b56</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

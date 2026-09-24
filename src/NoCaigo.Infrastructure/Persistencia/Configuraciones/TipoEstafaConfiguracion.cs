@@ -17,14 +17,6 @@ public class TipoEstafaConfiguracion : IEntityTypeConfiguration<TipoEstafa>
         builder.HasIndex(t => t.Nombre).IsUnique();
 
         // Datos semilla: quedan dentro de la migración, así cualquier base nueva ya los tiene.
-        builder.HasData(
-            new TipoEstafa(TipoEstafa.FalsoBanco, "Falso banco"),
-            new TipoEstafa(TipoEstafa.PaqueteRetenido, "Paquete retenido"),
-            new TipoEstafa(TipoEstafa.FalsoFamiliar, "Falso familiar"),
-            new TipoEstafa(TipoEstafa.PremioFalso, "Premio falso"),
-            new TipoEstafa(TipoEstafa.FalsaOfertaTrabajo, "Falsa oferta de trabajo"),
-            new TipoEstafa(TipoEstafa.InversionFalsa, "Inversión falsa"),
-            new TipoEstafa(TipoEstafa.Otro, "Otro"),
-            new TipoEstafa(TipoEstafa.Ninguno, "Ninguno"));
+        builder.HasData(TipoEstafa.Catalogo);
     }
 }

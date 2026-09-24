@@ -7,7 +7,7 @@ namespace NoCaigo.Application.Reglas;
 /// Normaliza el texto para comparar sin importar mayúsculas ni tildes
 /// ("ÚLTIMO aviso" y "ultimo aviso" deben activar la misma regla).
 /// </summary>
-internal static class NormalizadorTexto
+public static class NormalizadorTexto
 {
     /// <summary>
     /// Devuelve el texto en minúsculas y sin tildes. Para texto en español en forma

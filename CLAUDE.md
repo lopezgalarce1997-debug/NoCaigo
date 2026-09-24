@@ -78,10 +78,13 @@ Cada regla (positivos/negativos), anonimizador, combinación de puntajes (incl. 
 - [x] Paso 3: `IAnonimizador` + `Anonimizador` (GeneratedRegex) con pruebas
 - [x] Paso 4: 6 reglas `IReglaDeteccion` (Strategy + base Template Method `ReglaPorPalabrasClave`) con pruebas
 - [x] Paso 5: `ServicioAnalisis` (solo reglas), `RepositorioAnalisis`, `AnalisisController`, Swagger UI, manejo global de errores
+- [x] Paso 6: `IServicioIA` + `ClienteIACompatibleOpenAI` (un cliente para Ollama y Groq, `IA:ProveedorActivo`), `ParserRespuestaIA`, pruebas con HttpMessageHandler falso. Aún NO conectado a `ServicioAnalisis` (paso 7)
 
 ## Comandos útiles
 - Ejecutar API: `dotnet run --project src/NoCaigo.Api` (Swagger en http://localhost:5224/swagger)
 - Pruebas: `dotnet test`
 - Migración nueva: `dotnet ef migrations add <Nombre> -p src/NoCaigo.Infrastructure -s src/NoCaigo.Api -o Persistencia/Migraciones`
 - Aplicar: `dotnet ef database update -p src/NoCaigo.Infrastructure -s src/NoCaigo.Api`
+- IA local: Ollama con `llama3.2:3b` en http://localhost:11434 (primera llamada ~30 s mientras carga el modelo)
+- Groq: `dotnet user-secrets set "IA:Proveedores:Groq:ApiKey" "<clave>" --project src/NoCaigo.Api` y `IA:ProveedorActivo=Groq`
 - `dotnet-ef` es herramienta local (`dotnet-tools.json`): `dotnet tool restore`

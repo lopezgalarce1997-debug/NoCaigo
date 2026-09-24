@@ -16,6 +16,22 @@ public class TipoEstafa
     public const int Otro = 7;
     public const int Ninguno = 8;
 
+    /// <summary>
+    /// Catálogo completo. Única fuente de verdad: lo usan los datos semilla de la base
+    /// y el prompt/parser de la IA, así ambos nunca quedan desalineados.
+    /// </summary>
+    public static IReadOnlyList<TipoEstafa> Catalogo { get; } =
+    [
+        new(FalsoBanco, "Falso banco"),
+        new(PaqueteRetenido, "Paquete retenido"),
+        new(FalsoFamiliar, "Falso familiar"),
+        new(PremioFalso, "Premio falso"),
+        new(FalsaOfertaTrabajo, "Falsa oferta de trabajo"),
+        new(InversionFalsa, "Inversión falsa"),
+        new(Otro, "Otro"),
+        new(Ninguno, "Ninguno"),
+    ];
+
     public int Id { get; private set; }
     public string Nombre { get; private set; } = string.Empty;
 
