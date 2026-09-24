@@ -85,7 +85,9 @@ Cada regla (positivos/negativos), anonimizador, combinación de puntajes (incl. 
 - [x] README inicial con "Decisiones de diseño" y tabla de resultados reales (caso prompt injection)
 - [x] Paso 8: `GET /api/estadisticas/por-tipo?desde=&hasta=` y `GET /api/estadisticas/tendencia?semanas=` (semanas ISO 8601, lunes, UTC; agrupa por día en SQL y por semana en C#; rellena semanas vacías)
 - [x] Paso 9: `.github/workflows/ci.yml` (ubuntu, SDK de global.json, build Release `-warnaserror`, tests, artefacto .trx) + badge en README
-- [ ] Paso 10 (acordado): antes de las capturas, resetear la BD y cargar 15–20 mensajes de ejemplo realistas repartidos en varias semanas con un script de demo versionado en el repo y documentado en el README
+- [x] Paso 10a: `scripts/CargarDemo.cs` (18 mensajes, ~6 semanas, pipeline real, `--reiniciar` solo LocalDB); BD reseteada y cargada. Prompt con definiciones de cada tipo de estafa
+- [x] Paso 10b: README final (problema/solución, stack, Mermaid arquitectura + secuencia, ejecución, ejemplos reales, decisiones, pruebas, limitaciones, próximos pasos, autor)
+- [ ] Paso 10c (Bladimir): capturas en `docs/capturas/` (descomentar bloques `CAPTURA` del README) y URL de LinkedIn (`TODO` en sección Autor). Luego cerrar #10
 
 ## Comandos útiles
 - Ejecutar API: `dotnet run --project src/NoCaigo.Api` (Swagger en http://localhost:5224/swagger)
