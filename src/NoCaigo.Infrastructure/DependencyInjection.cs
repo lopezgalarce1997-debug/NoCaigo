@@ -44,6 +44,8 @@ public static class DependencyInjection
                 "Falta el Modelo del proveedor de IA activo.")
             .Validate(o => o.TimeoutSegundos is > 0 and <= 120,
                 "IA:TimeoutSegundos debe estar entre 1 y 120.")
+            .Validate(o => o.TimeoutConexionSegundos > 0 && o.TimeoutConexionSegundos <= o.TimeoutSegundos,
+                "IA:TimeoutConexionSegundos debe ser mayor que 0 y no mayor que IA:TimeoutSegundos.")
             .ValidateOnStart();
 
         // Cliente tipado: IHttpClientFactory administra las conexiones y entrega el
@@ -59,6 +61,13 @@ public static class DependencyInjection
 
             if (!string.IsNullOrWhiteSpace(proveedor.ApiKey))
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", proveedor.ApiKey);
+        })
+        // HttpClient.Timeout limita TODA la petición (conectar + esperar la respuesta del modelo, que
+        // puede tardar). ConnectTimeout limita solo la conexión: un proveedor caído se detecta en ~1 s.
+        .ConfigurePrimaryHttpMessageHandler(sp => new SocketsHttpHandler
+        {
+            ConnectTimeout = TimeSpan.FromSeconds(
+                sp.GetRequiredService<IOptions<OpcionesIA>>().Value.TimeoutConexionSegundos)
         });
     }
 }

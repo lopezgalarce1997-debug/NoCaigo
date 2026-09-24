@@ -14,6 +14,13 @@ public sealed class OpcionesIA
     /// <summary>Tiempo máximo de espera. Si se supera, el análisis sigue solo con reglas.</summary>
     public int TimeoutSegundos { get; set; } = 30;
 
+    /// <summary>
+    /// Tiempo máximo solo para ESTABLECER la conexión (distinto de esperar la respuesta).
+    /// Si el proveedor está caído se detecta rápido y el análisis sigue con reglas,
+    /// en vez de esperar los reintentos de conexión del sistema operativo.
+    /// </summary>
+    public double TimeoutConexionSegundos { get; set; } = 1;
+
     public Dictionary<string, OpcionesProveedorIA> Proveedores { get; set; } = [];
 
     /// <summary>Datos del proveedor activo (sin distinguir mayúsculas), o null si no está configurado.</summary>
