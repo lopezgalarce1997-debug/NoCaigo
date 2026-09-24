@@ -84,6 +84,8 @@ Cada regla (positivos/negativos), anonimizador, combinación de puntajes (incl. 
 - [x] Timeout de conexión IA 1 s (`IA:TimeoutConexionSegundos`, `SocketsHttpHandler.ConnectTimeout`); Ollama en 127.0.0.1. Circuit breaker: pendiente para después
 - [x] README inicial con "Decisiones de diseño" y tabla de resultados reales (caso prompt injection)
 - [x] Paso 8: `GET /api/estadisticas/por-tipo?desde=&hasta=` y `GET /api/estadisticas/tendencia?semanas=` (semanas ISO 8601, lunes, UTC; agrupa por día en SQL y por semana en C#; rellena semanas vacías)
+- [x] Paso 9: `.github/workflows/ci.yml` (ubuntu, SDK de global.json, build Release `-warnaserror`, tests, artefacto .trx) + badge en README
+- [ ] Paso 10 (acordado): antes de las capturas, resetear la BD y cargar 15–20 mensajes de ejemplo realistas repartidos en varias semanas con un script de demo versionado en el repo y documentado en el README
 
 ## Comandos útiles
 - Ejecutar API: `dotnet run --project src/NoCaigo.Api` (Swagger en http://localhost:5224/swagger)

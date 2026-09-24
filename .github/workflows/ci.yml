@@ -1,0 +1,63 @@
+# Integración continua: en cada push y pull request se restaura, compila y prueba la solución.
+# Las pruebas no necesitan SQL Server ni un proveedor de IA (todo lo externo está simulado),
+# así que el pipeline no requiere secretos.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch: # Permite ejecutarlo a mano desde la pestaña Actions.
+
+# Si llega un push nuevo a la misma rama, se cancela la ejecución anterior (ahorra minutos).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Mínimo privilegio: el pipeline solo necesita leer el código.
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    name: Compilar y probar
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+    steps:
+      - name: Obtener el código
+        uses: actions/checkout@v7
+
+      # Instala exactamente el SDK que fija global.json: el CI compila igual que en local.
+      - name: Instalar .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Restaurar dependencias
+        run: dotnet restore NoCaigo.slnx
+
+      # -warnaserror: una advertencia nueva rompe el build, así no se acumulan.
+      - name: Compilar (Release)
+        run: dotnet build NoCaigo.slnx --configuration Release --no-restore -warnaserror
+
+      - name: Ejecutar pruebas
+        run: >
+          dotnet test NoCaigo.slnx
+          --configuration Release
+          --no-build
+          --logger "trx;LogFileName=resultados.trx"
+          --results-directory ./resultados-pruebas
+
+      # Se suben los resultados incluso si alguna prueba falla, para poder revisarlos.
+      - name: Publicar resultados de las pruebas
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: resultados-pruebas
+          path: ./resultados-pruebas
+          retention-days: 14

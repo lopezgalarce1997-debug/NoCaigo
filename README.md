@@ -1,5 +1,7 @@
 # NoCaigo – Detector de estafas con IA
 
+[![CI](https://github.com/lopezgalarce1997-debug/NoCaigo/actions/workflows/ci.yml/badge.svg)](https://github.com/lopezgalarce1997-debug/NoCaigo/actions/workflows/ci.yml)
+
 API REST que analiza mensajes sospechosos (SMS, WhatsApp o correo) y responde con un **veredicto** (`Seguro`, `Sospechoso` o `Estafa`), un **nivel de riesgo de 0 a 100**, el **tipo de estafa** y las **señales encontradas explicadas en lenguaje simple**.
 
 Construida con ASP.NET Core (.NET 10), EF Core + SQL Server, xUnit + Moq y un modelo de lenguaje intercambiable por configuración (Ollama en local o Groq en la nube).
