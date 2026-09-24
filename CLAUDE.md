@@ -75,6 +75,7 @@ Cada regla (positivos/negativos), anonimizador, combinación de puntajes (incl. 
 - [ ] Crear repo público en GitHub (pendiente `gh auth login`)
 - [x] Paso 1: solución `NoCaigo.slnx` con 5 proyectos (`src/`, `tests/`) y referencias
 - [x] Paso 2: entidades, enums, DbContext, migración `Inicial` y semilla (aplicada en LocalDB)
+- [x] Paso 3: `IAnonimizador` + `Anonimizador` (GeneratedRegex) con pruebas
 
 ## Comandos útiles
 - Migración nueva: `dotnet ef migrations add <Nombre> -p src/NoCaigo.Infrastructure -s src/NoCaigo.Api -o Persistencia/Migraciones`
