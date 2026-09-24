@@ -74,3 +74,9 @@ Cada regla (positivos/negativos), anonimizador, combinación de puntajes (incl. 
 - [x] Preparación: entorno (.NET 10, LocalDB, gh) y git local
 - [ ] Crear repo público en GitHub (pendiente `gh auth login`)
 - [x] Paso 1: solución `NoCaigo.slnx` con 5 proyectos (`src/`, `tests/`) y referencias
+- [x] Paso 2: entidades, enums, DbContext, migración `Inicial` y semilla (aplicada en LocalDB)
+
+## Comandos útiles
+- Migración nueva: `dotnet ef migrations add <Nombre> -p src/NoCaigo.Infrastructure -s src/NoCaigo.Api -o Persistencia/Migraciones`
+- Aplicar: `dotnet ef database update -p src/NoCaigo.Infrastructure -s src/NoCaigo.Api`
+- `dotnet-ef` es herramienta local (`dotnet-tools.json`): `dotnet tool restore`
