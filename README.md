@@ -21,9 +21,7 @@ En Chile llegan a diario SMS, WhatsApp y correos que se hacen pasar por bancos, 
 
 El análisis es **híbrido**. Combina reglas deterministas, que no se pueden manipular, con un modelo de lenguaje, que entiende el contexto. Antes de guardar el mensaje o enviarlo a la IA, se **anonimizan los datos personales**. Además, la API entrega estadísticas por tipo de estafa y la tendencia semanal.
 
-<!-- CAPTURA 1: Swagger con todos los endpoints
-![Swagger UI de NoCaigo](docs/capturas/swagger.png)
--->
+![Swagger UI de NoCaigo con los endpoints de análisis y estadísticas](docs/capturas/swagger.png)
 
 ## Stack
 
@@ -259,9 +257,9 @@ Respuesta `201 Created` (real, generada con `llama3.2:3b`):
 
 Cada señal indica su `origen` (`Regla` o `IA`). Si la IA no está disponible, la respuesta trae `"usoIA": false`, solo señales de reglas y un aviso en la `explicacion`.
 
-<!-- CAPTURA 2: respuesta de POST /api/analisis en Swagger (mensaje del falso BancoEstado)
-![Análisis de un mensaje de falso banco](docs/capturas/analisis-estafa.png)
--->
+La misma prueba desde Swagger (el mensaje incluía un teléfono, que se guarda como `[TELEFONO]`):
+
+![Respuesta de POST /api/analisis para un falso BancoEstado: Estafa, 68, señales de reglas y de IA](docs/capturas/analisis-estafa.png)
 
 ### Anonimización
 
@@ -285,7 +283,7 @@ GET /api/estadisticas/tendencia?semanas=4
   { "semana": "2026-W36", "inicio": "2026-08-31", "fin": "2026-09-06", "cantidad": 3 },
   { "semana": "2026-W37", "inicio": "2026-09-07", "fin": "2026-09-13", "cantidad": 3 },
   { "semana": "2026-W38", "inicio": "2026-09-14", "fin": "2026-09-20", "cantidad": 3 },
-  { "semana": "2026-W39", "inicio": "2026-09-21", "fin": "2026-09-27", "cantidad": 2 }
+  { "semana": "2026-W39", "inicio": "2026-09-21", "fin": "2026-09-27", "cantidad": 3 }
 ]
 ```
 
@@ -297,20 +295,18 @@ GET /api/estadisticas/por-tipo
 
 ```json
 [
-  { "tipoEstafaId": 1, "tipoEstafa": "Falso banco", "cantidad": 5, "porcentaje": 27.8 },
-  { "tipoEstafaId": 2, "tipoEstafa": "Paquete retenido", "cantidad": 3, "porcentaje": 16.7 },
-  { "tipoEstafaId": 3, "tipoEstafa": "Falso familiar", "cantidad": 3, "porcentaje": 16.7 },
-  { "tipoEstafaId": 8, "tipoEstafa": "Ninguno", "cantidad": 3, "porcentaje": 16.7 },
-  { "tipoEstafaId": 4, "tipoEstafa": "Premio falso", "cantidad": 2, "porcentaje": 11.1 },
-  { "tipoEstafaId": 5, "tipoEstafa": "Falsa oferta de trabajo", "cantidad": 1, "porcentaje": 5.6 },
-  { "tipoEstafaId": 6, "tipoEstafa": "Inversión falsa", "cantidad": 1, "porcentaje": 5.6 },
+  { "tipoEstafaId": 1, "tipoEstafa": "Falso banco", "cantidad": 6, "porcentaje": 31.6 },
+  { "tipoEstafaId": 2, "tipoEstafa": "Paquete retenido", "cantidad": 3, "porcentaje": 15.8 },
+  { "tipoEstafaId": 3, "tipoEstafa": "Falso familiar", "cantidad": 3, "porcentaje": 15.8 },
+  { "tipoEstafaId": 8, "tipoEstafa": "Ninguno", "cantidad": 3, "porcentaje": 15.8 },
+  { "tipoEstafaId": 4, "tipoEstafa": "Premio falso", "cantidad": 2, "porcentaje": 10.5 },
+  { "tipoEstafaId": 5, "tipoEstafa": "Falsa oferta de trabajo", "cantidad": 1, "porcentaje": 5.3 },
+  { "tipoEstafaId": 6, "tipoEstafa": "Inversión falsa", "cantidad": 1, "porcentaje": 5.3 },
   { "tipoEstafaId": 7, "tipoEstafa": "Otro", "cantidad": 0, "porcentaje": 0 }
 ]
 ```
 
-<!-- CAPTURA 3: respuesta de GET /api/estadisticas/tendencia en Swagger
-![Tendencia semanal](docs/capturas/tendencia.png)
--->
+![Respuesta de GET /api/estadisticas/tendencia con 4 semanas ISO](docs/capturas/tendencia.png)
 
 ## Decisiones de diseño
 
@@ -342,10 +338,9 @@ Resultados obtenidos con `llama3.2:3b` corriendo en local:
 
 El último caso es un **ataque de prompt injection**. Analizado solo por la IA, el modelo obedeció al atacante y declaró el mensaje seguro. En NoCaigo, la regla de intento de manipulación (40 pts) y la de pedido de pago (20 pts) fijan un piso de 60 que la IA no puede bajar: `max(60, 0.4·60 + 0.6·0) = max(60, 24) = 60` → **Estafa**.
 
-<!-- CAPTURA 4: GET /api/analisis/{id} del mensaje de prompt injection en Swagger
-     (con los datos de demo es el id 14): se ve la señal "Contiene instrucciones dirigidas a un sistema automático"
-![Intento de prompt injection detectado](docs/capturas/prompt-injection.png)
--->
+El mismo ataque en los datos de demo: el mensaje ordena responder "Seguro · 0", pero el resultado es **Estafa · 87**, con la señal de intento de manipulación:
+
+![Intento de prompt injection detectado: Estafa 87 con la señal "Contiene instrucciones dirigidas a un sistema automático"](docs/capturas/prompt-injection.png)
 
 #### Otras defensas contra la manipulación
 
