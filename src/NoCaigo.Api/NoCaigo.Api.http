@@ -41,3 +41,12 @@ GET {{NoCaigo.Api_HostAddress}}/api/analisis/1
 
 ### Listado filtrado por tipo (1 = Falso banco) y canal
 GET {{NoCaigo.Api_HostAddress}}/api/analisis?tipo=1&canal=Sms&pagina=1
+
+### Estadísticas por tipo de estafa (todos los tipos, de mayor a menor)
+GET {{NoCaigo.Api_HostAddress}}/api/estadisticas/por-tipo
+
+### Estadísticas por tipo en un rango de fechas (UTC, ambos días incluidos)
+GET {{NoCaigo.Api_HostAddress}}/api/estadisticas/por-tipo?desde=2026-09-01&hasta=2026-09-30
+
+### Tendencia: análisis por semana ISO (lunes a domingo) de las últimas 8 semanas
+GET {{NoCaigo.Api_HostAddress}}/api/estadisticas/tendencia?semanas=8

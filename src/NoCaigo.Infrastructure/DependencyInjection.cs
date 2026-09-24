@@ -24,6 +24,7 @@ public static class DependencyInjection
 
         services.AddDbContext<NoCaigoDbContext>(opciones => opciones.UseSqlServer(cadenaConexion));
         services.AddScoped<IRepositorioAnalisis, RepositorioAnalisis>();
+        services.AddScoped<IRepositorioEstadisticas, RepositorioEstadisticas>();
 
         AgregarIA(services, configuration);
 

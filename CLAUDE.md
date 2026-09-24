@@ -81,6 +81,9 @@ Cada regla (positivos/negativos), anonimizador, combinación de puntajes (incl. 
 - [x] Paso 5: `ServicioAnalisis` (solo reglas), `RepositorioAnalisis`, `AnalisisController`, Swagger UI, manejo global de errores
 - [x] Paso 6: `IServicioIA` + `ClienteIACompatibleOpenAI` (un cliente para Ollama y Groq, `IA:ProveedorActivo`), `ParserRespuestaIA`, pruebas con HttpMessageHandler falso. Aún NO conectado a `ServicioAnalisis` (paso 7)
 - [x] Paso 7: `CombinadorPuntajes` → `final = max(reglas, PesoReglas·reglas + PesoIA·IA)` (sección `Combinacion`, 0.4/0.6); IA falla → solo reglas + `UsoIA=false` + aviso. Regla 7 `ReglaIntentoManipulacion` (40 pts). Mensaje a la IA como JSON `{"mensaje": ...}` separado del prompt system
+- [x] Timeout de conexión IA 1 s (`IA:TimeoutConexionSegundos`, `SocketsHttpHandler.ConnectTimeout`); Ollama en 127.0.0.1. Circuit breaker: pendiente para después
+- [x] README inicial con "Decisiones de diseño" y tabla de resultados reales (caso prompt injection)
+- [x] Paso 8: `GET /api/estadisticas/por-tipo?desde=&hasta=` y `GET /api/estadisticas/tendencia?semanas=` (semanas ISO 8601, lunes, UTC; agrupa por día en SQL y por semana en C#; rellena semanas vacías)
 
 ## Comandos útiles
 - Ejecutar API: `dotnet run --project src/NoCaigo.Api` (Swagger en http://localhost:5224/swagger)

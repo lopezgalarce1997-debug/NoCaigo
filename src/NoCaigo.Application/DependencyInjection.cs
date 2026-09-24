@@ -34,6 +34,7 @@ public static class DependencyInjection
 
         // Scoped porque depende del repositorio, que usa el DbContext (uno por request).
         services.AddScoped<IServicioAnalisis, ServicioAnalisis>();
+        services.AddScoped<IServicioEstadisticas, ServicioEstadisticas>();
 
         return services;
     }
