@@ -428,11 +428,11 @@ NoCaigo/
 
 ## Autor
 
-**Bladimir Lopez**, ingeniero en informática.
+**Bladimir Lopez**, ingeniero en informática y desarrollador de software C# / .NET.
 
 - LinkedIn: [linkedin.com/in/bladimirlopez](https://www.linkedin.com/in/bladimirlopez)
 - GitHub: [@lopezgalarce1997-debug](https://github.com/lopezgalarce1997-debug)
 
 ---
 
-> ⚠️ NoCaigo es un proyecto de portafolio. **Su resultado es orientativo** y no reemplaza verificar directamente con la entidad oficial. Ante la duda: no hagas clic, no entregues datos y no transfieras dinero.
+> ⚠️ **El resultado de NoCaigo es orientativo** y no reemplaza verificar directamente con la entidad oficial. Ante la duda: no hagas clic, no entregues datos y no transfieras dinero.

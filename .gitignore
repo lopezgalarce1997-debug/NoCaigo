@@ -485,3 +485,6 @@ $RECYCLE.BIN/
 
 # Prompt original del proyecto (contexto ya resumido en CLAUDE.md)
 prompt-nocaigo.md
+
+# Notas de trabajo locales (no se publican)
+CLAUDE.md
