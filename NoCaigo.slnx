@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/NoCaigo.Api/NoCaigo.Api.csproj" />
+    <Project Path="src/NoCaigo.Application/NoCaigo.Application.csproj" />
+    <Project Path="src/NoCaigo.Domain/NoCaigo.Domain.csproj" />
+    <Project Path="src/NoCaigo.Infrastructure/NoCaigo.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/NoCaigo.Tests/NoCaigo.Tests.csproj" />
+  </Folder>
+</Solution>

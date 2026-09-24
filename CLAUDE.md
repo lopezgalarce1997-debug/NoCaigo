@@ -71,4 +71,6 @@ Cada regla (positivos/negativos), anonimizador, combinación de puntajes (incl. 
 10. README (descripción, capturas, ejecución, decisiones, aviso de que el resultado es orientativo)
 
 ## Estado
-- [ ] Preparación: entorno, git, repo GitHub
+- [x] Preparación: entorno (.NET 10, LocalDB, gh) y git local
+- [ ] Crear repo público en GitHub (pendiente `gh auth login`)
+- [x] Paso 1: solución `NoCaigo.slnx` con 5 proyectos (`src/`, `tests/`) y referencias

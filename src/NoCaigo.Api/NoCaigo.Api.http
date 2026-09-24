@@ -1,0 +1,4 @@
+﻿@NoCaigo.Api_HostAddress = http://localhost:5224
+
+# Las peticiones de ejemplo se agregan en el paso 5 (endpoints de análisis).
+
